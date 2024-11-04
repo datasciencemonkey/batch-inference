@@ -1,0 +1,22 @@
+# The main job for llm_batch_sg.
+resources:
+  jobs:
+    llm_batch_sg_job:
+      name: llm_batch_sg_job
+
+      email_notifications:
+        on_failure:
+          - sathish.gangichetty@databricks.com
+
+      tasks:
+        - task_key: task
+          spark_python_task:
+            python_file: ../src/simple_batch.py
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
+            dependencies:
+              - databricks-sql-connector==3.4.0
+              - -r /Workspace/Users/sathish.gangichetty@databricks.com/.bundle/llm_batch_sg/dev/files/src/requirements.txt
